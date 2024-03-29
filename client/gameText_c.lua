@@ -27,7 +27,7 @@ GameText.config = {
 
             if data then
                 if data.isDone then
-                    removeEventHandler("onClientRender", root, GameText.config[GameText.BIG_CENTER].renderFunction)
+                    GameText.hide(GameText.BIG_CENTER)
                 else
                     GameText.texts[GameText.BIG_CENTER] =  GameText.processTextAnimation(data, function(cfg)
                         dxDrawBorderedText(2, cfg.text, screenW * 0.2719, screenH * 0.4278, screenW * 0.7281, screenH * 0.5917,
@@ -46,7 +46,7 @@ GameText.config = {
 
             if data then
                 if data.isDone then
-                    removeEventHandler("onClientRender", root, GameText.config[GameText.BIG_TOP].renderFunction)
+                    GameText.hide(GameText.BIG_TOP)
                 else
                     GameText.texts[GameText.BIG_TOP] = GameText.processTextAnimation(data, function(cfg)
                         dxDrawBorderedText(2, cfg.text, screenW * 0.2719, screenH * 0.1287, screenW * 0.7281, screenH * 0.2093,
@@ -65,7 +65,7 @@ GameText.config = {
 
             if data then
                 if data.isDone then
-                    removeEventHandler("onClientRender", root, GameText.config[GameText.STATUS].renderFunction)
+                    GameText.hide(GameText.STATUS)
                 else
                     GameText.texts[GameText.STATUS] = GameText.processTextAnimation(data, function(cfg)
                         dxDrawBorderedText(1, cfg.text, screenW * 0.2719, screenH * 0.6009, screenW * 0.7281, screenH * 0.6917,
@@ -84,7 +84,7 @@ GameText.config = {
 
             if data then
                 if data.isDone then
-                    removeEventHandler("onClientRender", root, GameText.config[GameText.SCORES].renderFunction)
+                    GameText.hide(GameText.SCORES)
                 else
                     GameText.texts[GameText.SCORES] = GameText.processTextAnimation(data, function(cfg)
                         dxDrawBorderedText(1, cfg.text, screenW * 0.2719, screenH * 0.7009, screenW * 0.7281, screenH * 0.8028,
@@ -103,12 +103,12 @@ GameText.config = {
 
             if data then
                 if data.isDone then
-                    removeEventHandler("onClientRender", root, GameText.config[GameText.DIALOG].renderFunction)
+                    GameText.hide(GameText.DIALOG)
                 else
                     GameText.texts[GameText.DIALOG] = GameText.processTextAnimation(data, function(cfg)
                         dxDrawBorderedText(1, cfg.text, screenW * 0.2719, screenH * 0.8139, screenW * 0.7281, screenH * 0.9157,
                             tocolor(cfg.colorR, cfg.colorG, cfg.colorB, cfg.currentAlpha), 2.0, 1.7, "sans", "center",
-                            "top", false, false, false, true, false)
+                            "top", false, true, false, true, false)
                     end)
                 end
             end
@@ -122,7 +122,7 @@ GameText.config = {
 
             if data then
                 if data.isDone then
-                    removeEventHandler("onClientRender", root, GameText.config[GameText.AREA_NAME].renderFunction)
+                    GameText.hide(GameText.AREA_NAME)
                 else
                     GameText.texts[GameText.AREA_NAME] = GameText.processTextAnimation(data, function(cfg)
                         dxDrawBorderedText(1, cfg.text, screenW * 0.6240, screenH * 0.8028, screenW * 0.9891, screenH * 0.8722,
@@ -141,7 +141,7 @@ GameText.config = {
 
             if data then
                 if data.isDone then
-                    removeEventHandler("onClientRender", root, GameText.config[GameText.VEH_NAME].renderFunction)
+                    GameText.hide(GameText.VEH_NAME)
                 else
                     GameText.texts[GameText.VEH_NAME] = GameText.processTextAnimation(data, function(cfg)
                         dxDrawBorderedText(1, cfg.text, screenW * 0.6240, screenH * 0.7241, screenW * 0.9891, screenH * 0.7935,
@@ -160,7 +160,7 @@ GameText.config = {
 
             if data then
                 if data.isDone then
-                    removeEventHandler("onClientRender", root, GameText.config[GameText.DAMAGES].renderFunction)
+                    GameText.hide(GameText.DAMAGES)
                 else
                     GameText.texts[GameText.DAMAGES] = GameText.processTextAnimation(data, function(cfg)
                         dxDrawBorderedText(1, cfg.text, screenW * 0.6542, screenH * 0.8815, screenW * 0.9891, screenH * 0.9157,
@@ -179,10 +179,10 @@ GameText.config = {
 
             if data then
                 if data.isDone then
-                    removeEventHandler("onClientRender", root, GameText.config[GameText.SHOUT].renderFunction)
+                    GameText.hide(GameText.SHOUT)
                 else
                     GameText.texts[GameText.SHOUT] = GameText.processTextAnimation(data, function(cfg)
-                        dxDrawBorderedText(1, screenW * 0.2719, screenH * 0.2185, screenW * 0.7281, screenH * 0.4185,
+                        dxDrawBorderedText(1, cfg.text, screenW * 0.2719, screenH * 0.2185, screenW * 0.7281, screenH * 0.4185,
                             tocolor(cfg.colorR, cfg.colorG, cfg.colorB, cfg.currentAlpha), 3.0, 3.0, "default-bold", "center",
                             "top", false, true, true, true, false)
                     end)
@@ -194,6 +194,8 @@ GameText.config = {
 
 GameText.show = function(style, text, duration, r, g, b)
     if GameText.isValidStyle(style) then
+        GameText.hide(style)
+
         -- Domyślna czas wyświetlania tekstu
         duration = duration or 3000
         -- Domyślny kolor jeżeli nie zdefiniowano
@@ -219,6 +221,22 @@ GameText.show = function(style, text, duration, r, g, b)
     end
     
     return nil
+end
+
+GameText.hide = function(style)
+    if GameText.isValidStyle(style) then
+        local attachedFunctions = getEventHandlers("onClientRender", root)
+        if attachedFunctions then
+            for _,v in ipairs(attachedFunctions) do
+                if v == GameText.config[style].renderFunction then
+                    removeEventHandler("onClientRender", root, GameText.config[style].renderFunction)
+                    return true
+                end
+            end
+        end
+    end
+
+    return false
 end
 
 addEventHandler("onClientRender", root, function()
