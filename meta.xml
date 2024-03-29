@@ -1,0 +1,12 @@
+<meta>
+    <info
+        author="MrSpy0x22"
+        version="1.0"
+        name="Polskiegw.pl"
+        type="misc"
+        description="Simple as fcuk polish GangWar server."
+    />
+
+    <script src="/client/utils_c.lua" type="client" cache="false" />
+    <script src="/client/gameText_c.lua" type="client" cache="false" />
+</meta>

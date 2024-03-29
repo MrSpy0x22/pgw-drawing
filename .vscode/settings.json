@@ -1,0 +1,17 @@
+{
+    "Lua.diagnostics.globals": [
+        "getRealTime",
+        "tocolor",
+        "addEventHandler",
+        "root",
+        "addCommandHandler",
+        "guiGetScreenSize",
+        "getTickCount",
+        "interpolateBetween",
+        "removeEventHandler",
+        "outputChatBox",
+        "dxDrawText",
+        "getEventHandlers",
+        "getColorFromString"
+    ]
+}
