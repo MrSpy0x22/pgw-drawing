@@ -4,9 +4,14 @@
         version="1.0"
         name="Polskiegw.pl"
         type="misc"
-        description="Simple as fcuk polish GangWar server."
+        description="Drawing module for Polskiegw.pl."
     />
+
+    <script src="/shared/gameTextTypeEnum.lua" type="shared" cache="false" />
 
     <script src="/client/utils_c.lua" type="client" cache="false" />
     <script src="/client/gameText_c.lua" type="client" cache="false" />
+    <script src="/exports_c.lua" type="client" cache="false" />
+
+    <export function="showClientGameText" type="client" />
 </meta>

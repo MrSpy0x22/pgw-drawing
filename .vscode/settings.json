@@ -12,6 +12,11 @@
         "outputChatBox",
         "dxDrawText",
         "getEventHandlers",
-        "getColorFromString"
+        "getColorFromString",
+        "addEvent",
+        "isElement",
+        "getElementType",
+        "triggerClientEvent",
+        "localPlayer"
     ]
 }

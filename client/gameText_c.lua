@@ -1,35 +1,25 @@
+--addEvent(Events.client.serverAsksForGameText, true)
+
 local screenW, screenH = guiGetScreenSize()
-currentStyle = 0
 
 GameText = {}
-
--- Style tekstów
-GameText.BIG_CENTER = 1
-GameText.BIG_TOP = 2
-GameText.STATUS = 3
-GameText.SCORES = 4
-GameText.DIALOG = 5
-GameText.AREA_NAME = 6
-GameText.VEH_NAME = 7
-GameText.DAMAGES = 8
-GameText.SHOUT = 9
 
 -- Tabela z danymi stylów (do odtwarzania animacji)
 GameText.texts = {}
 
 -- Tabela z configuracją i zachowaniem każdego stylu
 GameText.config = {
-    -- GameText.BIG_CENTER
+    -- GameTextTypeEnum.BIG_CENTER
     [1] = {
         defaultColor = function() return 255, 171, 112 end,
         renderFunction = function()
-            local data = GameText.texts[GameText.BIG_CENTER]
+            local data = GameText.texts[GameTextTypeEnum.BIG_CENTER]
 
             if data then
                 if data.isDone then
-                    GameText.hide(GameText.BIG_CENTER)
+                    GameText.hide(GameTextTypeEnum.BIG_CENTER)
                 else
-                    GameText.texts[GameText.BIG_CENTER] =  GameText.processTextAnimation(data, function(cfg)
+                    GameText.texts[GameTextTypeEnum.BIG_CENTER] =  GameText.processTextAnimation(data, function(cfg)
                         dxDrawBorderedText(2, cfg.text, screenW * 0.2719, screenH * 0.4278, screenW * 0.7281, screenH * 0.5917,
                             tocolor(cfg.colorR, cfg.colorG, cfg.colorB, cfg.currentAlpha), 3, 3, "pricedown", "center",
                             "center", false, false, true, true, false)
@@ -38,17 +28,17 @@ GameText.config = {
             end
         end,
     },
-    -- GameText.BIG_TOP
+    -- GameTextTypeEnum.BIG_TOP
     [2] = {
         defaultColor = function() return 108, 184, 242 end,
         renderFunction = function()
-            local data = GameText.texts[GameText.BIG_TOP]
+            local data = GameText.texts[GameTextTypeEnum.BIG_TOP]
 
             if data then
                 if data.isDone then
-                    GameText.hide(GameText.BIG_TOP)
+                    GameText.hide(GameTextTypeEnum.BIG_TOP)
                 else
-                    GameText.texts[GameText.BIG_TOP] = GameText.processTextAnimation(data, function(cfg)
+                    GameText.texts[GameTextTypeEnum.BIG_TOP] = GameText.processTextAnimation(data, function(cfg)
                         dxDrawBorderedText(2, cfg.text, screenW * 0.2719, screenH * 0.1287, screenW * 0.7281, screenH * 0.2093,
                             tocolor(cfg.colorR, cfg.colorG, cfg.colorB, cfg.currentAlpha), 2, 2, "pricedown", "center",
                             "bottom", false, false, false, true, false)
@@ -57,17 +47,17 @@ GameText.config = {
             end
         end,
     },
-    -- GameText.STATUS
+    -- GameTextTypeEnum.STATUS
     [3] = {
         defaultColor = function() return 108, 184, 242 end,
         renderFunction = function()
-            local data = GameText.texts[GameText.STATUS]
+            local data = GameText.texts[GameTextTypeEnum.STATUS]
 
             if data then
                 if data.isDone then
-                    GameText.hide(GameText.STATUS)
+                    GameText.hide(GameTextTypeEnum.STATUS)
                 else
-                    GameText.texts[GameText.STATUS] = GameText.processTextAnimation(data, function(cfg)
+                    GameText.texts[GameTextTypeEnum.STATUS] = GameText.processTextAnimation(data, function(cfg)
                         dxDrawBorderedText(1, cfg.text, screenW * 0.2719, screenH * 0.6009, screenW * 0.7281, screenH * 0.6917,
                             tocolor(cfg.colorR, cfg.colorG, cfg.colorB, cfg.currentAlpha), 1.4, 1.4, "bankgothic", "center",
                             "center", false, true, false, true, false)
@@ -76,17 +66,17 @@ GameText.config = {
             end
         end,
     },
-    -- GameText.SCORES
+    -- GameTextTypeEnum.SCORES
     [4] = {
         defaultColor = function() return 141, 134, 92 end,
         renderFunction = function()
-            local data = GameText.texts[GameText.SCORES]
+            local data = GameText.texts[GameTextTypeEnum.SCORES]
 
             if data then
                 if data.isDone then
-                    GameText.hide(GameText.SCORES)
+                    GameText.hide(GameTextTypeEnum.SCORES)
                 else
-                    GameText.texts[GameText.SCORES] = GameText.processTextAnimation(data, function(cfg)
+                    GameText.texts[GameTextTypeEnum.SCORES] = GameText.processTextAnimation(data, function(cfg)
                         dxDrawBorderedText(1, cfg.text, screenW * 0.2719, screenH * 0.7009, screenW * 0.7281, screenH * 0.8028,
                             tocolor(cfg.colorR, cfg.colorG, cfg.colorB, cfg.currentAlpha), 1.2, 1.2, "pricedown", "center",
                             "bottom", false, false, false, true, false)
@@ -95,17 +85,17 @@ GameText.config = {
             end
         end,
     },
-    -- GameText.DIALOG
+    -- GameTextTypeEnum.DIALOG
     [5] = {
         defaultColor = function() return 240, 240, 240 end,
         renderFunction = function()
-            local data = GameText.texts[GameText.DIALOG]
+            local data = GameText.texts[GameTextTypeEnum.DIALOG]
 
             if data then
                 if data.isDone then
-                    GameText.hide(GameText.DIALOG)
+                    GameText.hide(GameTextTypeEnum.DIALOG)
                 else
-                    GameText.texts[GameText.DIALOG] = GameText.processTextAnimation(data, function(cfg)
+                    GameText.texts[GameTextTypeEnum.DIALOG] = GameText.processTextAnimation(data, function(cfg)
                         dxDrawBorderedText(1, cfg.text, screenW * 0.2719, screenH * 0.8139, screenW * 0.7281, screenH * 0.9157,
                             tocolor(cfg.colorR, cfg.colorG, cfg.colorB, cfg.currentAlpha), 2.0, 1.7, "sans", "center",
                             "top", false, true, false, true, false)
@@ -114,17 +104,17 @@ GameText.config = {
             end
         end,
     },
-    -- GameText.AREA_NAME
+    -- GameTextTypeEnum.AREA_NAME
     [6] = {
         defaultColor = function() return 131, 134, 150 end,
         renderFunction = function()
-            local data = GameText.texts[GameText.AREA_NAME]
+            local data = GameText.texts[GameTextTypeEnum.AREA_NAME]
 
             if data then
                 if data.isDone then
-                    GameText.hide(GameText.AREA_NAME)
+                    GameText.hide(GameTextTypeEnum.AREA_NAME)
                 else
-                    GameText.texts[GameText.AREA_NAME] = GameText.processTextAnimation(data, function(cfg)
+                    GameText.texts[GameTextTypeEnum.AREA_NAME] = GameText.processTextAnimation(data, function(cfg)
                         dxDrawBorderedText(1, cfg.text, screenW * 0.6240, screenH * 0.8028, screenW * 0.9891, screenH * 0.8722,
                             tocolor(cfg.colorR, cfg.colorG, cfg.colorB, cfg.currentAlpha), 2.5, 2.5, "beckett", "right",
                             "center", false, true, false, false, false)
@@ -133,17 +123,17 @@ GameText.config = {
             end
         end,
     },
-    -- GameText.VEH_NAME
+    -- GameTextTypeEnum.VEH_NAME
     [7] = {
         defaultColor = function() return 52, 208, 88 end,
         renderFunction = function()
-            local data = GameText.texts[GameText.VEH_NAME]
+            local data = GameText.texts[GameTextTypeEnum.VEH_NAME]
 
             if data then
                 if data.isDone then
-                    GameText.hide(GameText.VEH_NAME)
+                    GameText.hide(GameTextTypeEnum.VEH_NAME)
                 else
-                    GameText.texts[GameText.VEH_NAME] = GameText.processTextAnimation(data, function(cfg)
+                    GameText.texts[GameTextTypeEnum.VEH_NAME] = GameText.processTextAnimation(data, function(cfg)
                         dxDrawBorderedText(1, cfg.text, screenW * 0.6240, screenH * 0.7241, screenW * 0.9891, screenH * 0.7935,
                             tocolor(cfg.colorR, cfg.colorG, cfg.colorB, cfg.currentAlpha), 3.0, 3.0, "bankghotic", "right",
                             "center", false, true, false, false, false)
@@ -152,17 +142,17 @@ GameText.config = {
             end
         end,
     },
-    -- GameText.DAMAGES
+    -- GameTextTypeEnum.DAMAGES
     [8] = {
         defaultColor = function() return 240, 240, 240 end,
         renderFunction = function()
-            local data = GameText.texts[GameText.DAMAGES]
+            local data = GameText.texts[GameTextTypeEnum.DAMAGES]
 
             if data then
                 if data.isDone then
-                    GameText.hide(GameText.DAMAGES)
+                    GameText.hide(GameTextTypeEnum.DAMAGES)
                 else
-                    GameText.texts[GameText.DAMAGES] = GameText.processTextAnimation(data, function(cfg)
+                    GameText.texts[GameTextTypeEnum.DAMAGES] = GameText.processTextAnimation(data, function(cfg)
                         dxDrawBorderedText(1, cfg.text, screenW * 0.6542, screenH * 0.8815, screenW * 0.9891, screenH * 0.9157,
                             tocolor(cfg.colorR, cfg.colorG, cfg.colorB, cfg.currentAlpha), 1.1, 1.1, "sans", "right",
                             "center", false, true, false, false, false)
@@ -171,17 +161,17 @@ GameText.config = {
             end
         end,
     },
-    -- GameText.SHOUT
+    -- GameTextTypeEnum.SHOUT
     [9] = {
         defaultColor = function() return 195, 61, 64 end,
         renderFunction = function()
-            local data = GameText.texts[GameText.SHOUT]
+            local data = GameText.texts[GameTextTypeEnum.SHOUT]
 
             if data then
                 if data.isDone then
-                    GameText.hide(GameText.SHOUT)
+                    GameText.hide(GameTextTypeEnum.SHOUT)
                 else
-                    GameText.texts[GameText.SHOUT] = GameText.processTextAnimation(data, function(cfg)
+                    GameText.texts[GameTextTypeEnum.SHOUT] = GameText.processTextAnimation(data, function(cfg)
                         dxDrawBorderedText(1, cfg.text, screenW * 0.2719, screenH * 0.2185, screenW * 0.7281, screenH * 0.4185,
                             tocolor(cfg.colorR, cfg.colorG, cfg.colorB, cfg.currentAlpha), 3.0, 3.0, "default-bold", "center",
                             "top", false, true, true, true, false)
@@ -193,7 +183,7 @@ GameText.config = {
 }
 
 GameText.show = function(style, text, duration, r, g, b)
-    if GameText.isValidStyle(style) then
+    if GameTextTypeEnum.isValid(style) then
         GameText.hide(style)
 
         -- Domyślna czas wyświetlania tekstu
@@ -224,7 +214,7 @@ GameText.show = function(style, text, duration, r, g, b)
 end
 
 GameText.hide = function(style)
-    if GameText.isValidStyle(style) then
+    if GameTextTypeEnum.isValid(style) then
         local attachedFunctions = getEventHandlers("onClientRender", root)
         if attachedFunctions then
             for _,v in ipairs(attachedFunctions) do
@@ -238,32 +228,6 @@ GameText.hide = function(style)
 
     return false
 end
-
-addEventHandler("onClientRender", root, function()
-    if GameText.isValidStyle(currentStyle) then
-        local config = GameText.texts[currentStyle] or {}
-
-        dxDrawText("Alpha:", 1622, 851, 1761, 1044, tocolor(255, 255, 255, 255), 1.00, "default", "right", "top", false, false, false, false, false)
-        dxDrawText(tostring(config.currentAlpha), 1771, 851, 1910, 1044, tocolor(255, 255, 255, 255), 1.00, "default", "left", "top", false, false, false, false, false)
-        dxDrawText("IsShown:", 1622, 871, 1761, 1044, tocolor(255, 255, 255, 255), 1.00, "default", "right", "top", false, false, false, false, false)
-        dxDrawText(tostring(config.isShown), 1771, 871, 1910, 1044, tocolor(255, 255, 255, 255), 1.00, "default", "left", "top", false, false, false, false, false)
-        dxDrawText("IsDone:", 1622, 891, 1761, 1044, tocolor(255, 255, 255, 255), 1.00, "default", "right", "top", false, false, false, false, false)
-        dxDrawText(tostring(config.isDone), 1771, 891, 1910, 1044, tocolor(255, 255, 255, 255), 1.00, "default", "left", "top", false, false, false, false, false)
-
-        local attachedFunctions = getEventHandlers("onClientRender", root)
-        local eventAttached = false
-        if attachedFunctions then
-            for k,v in ipairs(attachedFunctions) do
-                if v == GameText.config[currentStyle].renderFunction then
-                    eventAttached = true
-                end
-            end
-        end
-
-        dxDrawText("Event?:", 1622, 911, 1761, 1044, tocolor(255, 255, 255, 255), 1.00, "default", "right", "top", false, false, false, false, false)
-        dxDrawText(tostring(eventAttached), 1771, 911, 1910, 1044, tocolor(255, 255, 255, 255), 1.00, "default", "left", "top", false, false, false, false, false)
-    end
-end)
 
 GameText.processTextAnimation = function(config, func)
     local now = getTickCount()
@@ -304,22 +268,12 @@ GameText.isAnimConfig = function(config)
        and config["startTime"] ~= nil
        and config["stopTime"] ~= nil
 end
-GameText.isValidStyle = function(style)
-    return type(style) == "number"
-       and (style == GameText.BIG_CENTER
-        or style == GameText.BIG_TOP
-        or style == GameText.STATUS
-        or style == GameText.SCORES
-        or style == GameText.DIALOG
-        or style == GameText.AREA_NAME
-        or style == GameText.VEH_NAME
-        or style == GameText.DAMAGES
-        or style == GameText.SHOUT)
-end
 
+--[[ *** TESTOWANIE ***
+currentStyle = 0
 addCommandHandler("testgt", function(cmdName, style, ...)
     local numStyle = tonumber(style)
-    if not GameText.isValidStyle(numStyle) then
+    if not GameTextTypeEnum.isValid(numStyle) then
         outputChatBox("Invalid style!", 255, 0, 0)
         return
     end
@@ -334,4 +288,4 @@ addCommandHandler("testgt", function(cmdName, style, ...)
 
     local result = GameText.show(numStyle, text, 3000) == true
     outputChatBox("GameText.show ==> ".. tostring(result))
-end)
+end)]]
