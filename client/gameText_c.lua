@@ -135,7 +135,7 @@ GameText.config = {
                 else
                     GameText.texts[GameTextTypeEnum.VEH_NAME] = GameText.processTextAnimation(data, function(cfg)
                         dxDrawBorderedText(1, cfg.text, screenW * 0.6240, screenH * 0.7241, screenW * 0.9891, screenH * 0.7935,
-                            tocolor(cfg.colorR, cfg.colorG, cfg.colorB, cfg.currentAlpha), 3.0, 3.0, "bankghotic", "right",
+                            tocolor(cfg.colorR, cfg.colorG, cfg.colorB, cfg.currentAlpha), 1.5, 1.5, "bankgothic", "right",
                             "center", false, true, false, false, false)
                     end)
                 end

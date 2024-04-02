@@ -11,6 +11,7 @@
 
     <script src="/client/utils_c.lua" type="client" cache="false" />
     <script src="/client/gameText_c.lua" type="client" cache="false" />
+    <script src="/client/selectMenu_c.lua" type="client" cache="false" />
     <script src="/exports_c.lua" type="client" cache="false" />
 
     <export function="showClientGameText" type="client" />

@@ -17,6 +17,8 @@
         "isElement",
         "getElementType",
         "triggerClientEvent",
-        "localPlayer"
+        "localPlayer",
+        "dxDrawRectangle",
+        "outputDebugString"
     ]
 }
