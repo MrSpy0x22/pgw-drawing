@@ -24,7 +24,7 @@ SelectMenu.create = function(id, title, data, columns, elementsPerPage, playSoun
     if elementsPerPage == nil or elementsPerPage < 1 or elementsPerPage > 7 then
         columns = 7
     end
-    if columns == nil or columns < 1 or columns > 3 then
+    if columns == nil or columns < 1 or columns > 2 then
         columns = 1
     end
 
@@ -76,6 +76,7 @@ SelectMenu.create = function(id, title, data, columns, elementsPerPage, playSoun
     SelectMenu.config.columns = columns
     SelectMenu.config.enableSounds = playSound
     SelectMenu.config.pageSize = elementsPerPage
+    SelectMenu.config.skip = 0
     SelectMenu.config.rows = rowCount
     SelectMenu.config.data = tempData
     SelectMenu.config.isVisible = true
@@ -103,6 +104,7 @@ SelectMenu.destroy = function()
     SelectMenu.config.rows = 0
     SelectMenu.config.enableSounds = false
     SelectMenu.config.pageSize = 7
+    SelectMenu.config.skip = 0
     SelectMenu.config.data = {}
     SelectMenu.config.callbackEventName = ""
 end
@@ -134,7 +136,28 @@ SelectMenu.draw = function()
     dxDrawRectangle(progressBarPosX - progressBarOffsetX, scrollPositionY, 4, scrollSizeY, tocolor(254, 255, 255, 42), false)
 
     -- Rysowanie tekstów
-    
+    local textLeftSizeX, textRightSizeX, textSizeY = 369, 170, 33
+    local textLeftPosX = firstItemX + 10
+    local textRightPosX = textLeftPosX + textLeftSizeX
+    local itemNumber = 0
+    for i = SelectMenu.config.skip , SelectMenu.config.pageSize, 1 do
+        local itemPosY = firstItemY + (offsetY * itemNumber)
+
+        if SelectMenu.config.columns == 2 then
+            dxDrawText(SelectMenu.config.data[i][1], textLeftSizeX, itemPosY, textLeftSizeX + textLeftSizeX,
+                itemPosY + textSizeY, tocolor(1, 0, 0, 255), 1.50, "default-bold", "left", "center",
+                false, false, true, false, false)
+            dxDrawText(SelectMenu.config.data[i][1], textRightPosX, itemPosY, textRightPosX + textRightSizeX,
+                itemPosY + textSizeY, tocolor(1, 0, 0, 255), 1.50, "default-bold", "right", "center",
+                false, false, true, false, false)
+        else
+            dxDrawText(SelectMenu.config.data[i][1], textLeftSizeX, itemPosY, textLeftSizeX + textLeftSizeX + textRightSizeX,
+                itemPosY + textSizeY, tocolor(1, 0, 0, 255), 1.50, "default-bold", "left", "center",
+                false, false, true, false, false)
+        end
+
+        itemNumber = itemNumber + 1
+    end
 end
 
 SelectMenu.handleKeys = function(key, pressing)
@@ -142,20 +165,27 @@ SelectMenu.handleKeys = function(key, pressing)
     if (key == "arrow_d" or key == "mouse_wheel_down") and pressing then
         local highlighted = SelectMenu.config.highlighted
         local selected = SelectMenu.config.selected
+        local skip = SelectMenu.config.skip
 
         if highlighted < SelectMenu.config.pageSize then
             SelectMenu.config.highlighted = highlighted + 1
+        elseif skip + SelectMenu.config.pageSize < SelectMenu.config.rows then
+            SelectMenu.config.skip = skip + 1
         end
 
         if selected < SelectMenu.config.rows then
             SelectMenu.config.selected = selected + 1
         end
+
     elseif (key == "arrow_u" or key == "mouse_wheel_up") and pressing then
         local highlighted = SelectMenu.config.highlighted
         local selected = SelectMenu.config.selected
+        local skip = SelectMenu.config.skip
 
         if highlighted > 1 then
             SelectMenu.config.highlighted = highlighted - 1
+        elseif skip + SelectMenu.config.pageSize > 0 then
+            SelectMenu.config.skip = skip - 1
         end
 
         if selected > 1 then
@@ -173,7 +203,7 @@ addCommandHandler("testmenu", function()
         SelectMenu.destroy()
         outputChatBox("Hiding menu")
     else
-        SelectMenu.create(1, "Test of Select Menu behaviours", {"test1", "test2", "test3", "test4", "test5", "test6", "test7"}, 1, 7, true)
+        SelectMenu.create(1, "Select Menu Test", {"test1", "test2", "test3", "test4", "test5", "test6", "test7"}, 1, 7, true)
         outputChatBox("Showing menu")
     end
 end)
