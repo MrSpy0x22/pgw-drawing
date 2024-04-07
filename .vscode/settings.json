@@ -19,6 +19,12 @@
         "triggerClientEvent",
         "localPlayer",
         "dxDrawRectangle",
-        "outputDebugString"
+        "outputDebugString",
+        "isControlEnabled",
+        "dxDrawLine",
+        "toggleControl",
+        "outputConsole",
+        "toJSON",
+        "triggerServerEvent"
     ]
 }

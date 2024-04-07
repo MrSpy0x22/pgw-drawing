@@ -1,1 +1,72 @@
-# pgw-drawing
+# Moduł rysowania
+Ten moduł rysuje różnego rodzaju elementy po stronie klienta. Celem modułu jest wystawienie API, które narysuje różnego rodzaju elementy, obsłuży je i odeśle odpowiednią informacje do serwera (w razie potrzeby).
+
+# API
+ * [GameText](#gameText),
+ * [SelectMenu](#select-menu),
+
+## GameText
+Moduł pokazuje tekst na ekranie. Pokazywanie i ukrywanie tekstu jest animowane.
+
+`function showClientGameText(style, text, duration, r, g, b)`
+
+| **Parametr**    | **Typ**        | **Wymagany?** |
+|:----------------|:--------------:|--------------:|
+| styl            | `number`       | tak           |
+| text            | `string`       | tak           | 
+| duration        | `number)`      | tak           |
+| r               | `number`       | nie           |
+| g               | `number`       | nie           |
+| b               | `number`       | nie           |
+
+### Opis parametrów
+ * `styl` - Styl tekstu (patrz niżej),
+ * `text` - Tekst do wyświetlenia,
+ * `duration` - Czas trwania tekstu (nie uwzględnai czasu animacji),
+ * `r, g, b` - kKolor tekstu (w przypadku braku zostanie użyty domyślny dla wybranego stylu),
+
+### Styl tekstu
+| **Nazwa stałej** | **Id (liczba)** |
+|:-----------------|----------------:|
+| BIG_CENTER       | 1               |
+| BIG_TOP          | 2               |
+| STATUS           | 3               |
+| SCORES           | 4               |
+| DIALOG           | 5               |
+| AREA_NAME        | 6               |
+| VEH_NAME         | 7               |
+| DAMAGES          | 8               |
+| SHOUT            | 9               |
+
+## Select Menu
+Moduł rysuje listę elementów do wyboru.
+
+`function showClientSelectMenu(id, title, data, columns, elementsPerPage, color, eventName, sendToElement)`
+
+| **Parametr**    | **Typ**        | **Wymagany?** |
+|:----------------|:--------------:|--------------:|
+| id              | `number`       | tak           |
+| title           | `string(1-64)` | tak           | 
+| columns         | `number(1-2)`  | tak           |
+| elementsPerPage | `number`       | tak           |
+| color           | `tocolor()`    | tak           |
+| evetName        | `string`       | tak           |
+| sendToElement   | `element`      | tak           |
+
+### Opis parametrów
+ * `id` - Identyfikator menu (zwracany w evencie),
+ * `title` - Wyświetlany tytuł menu
+ * `columns` - Liczba widocznych kolumn (1 lub 2; kolumna 2 jest mniejsza i wyjustowana jest do lewej strony),
+ * `elementsPerPage` - Określa rozmiar menu (wysokość) przez liczbę wyświetlanych elementów na raz,
+ * `color` - Kolor ramki na górze menu,
+ * `eventName` - Event po stronie serwera, który zostanie wywołany po wyborze elementu lub po wyjściu z menu,
+ * `sendToElement` - Element, do którego event ma zostać wysłany,
+
+### Opis event-y
+
+`function(menuId, itemSelected, selectedItemIndex, highlightedItem)`
+
+ * `menuId` - Identyfikator widocznego menu,
+ * `itemSelected` - Określa sposób wyjścia z menu (`true` jeżeli nastąpił wybór lub `false` jeżeli klient wyszedł z menu),
+ * `selectedItemIndex` - Index na w tabeli `data`, która została wysłana w parametrze funkcji `showClientSelectMenu(..)`,
+ * `highlightedItem` - Pozycja zaznaczenia na liście (od `1` do wartości określonej w parametrze `elementsPerPage` funkcji `showClientSelectMenu(..)`)  

@@ -15,4 +15,5 @@
     <script src="/exports_c.lua" type="client" cache="false" />
 
     <export function="showClientGameText" type="client" />
+    <export function="showClientSelectMenu" type="client" />
 </meta>
