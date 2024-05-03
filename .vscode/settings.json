@@ -25,6 +25,8 @@
         "toggleControl",
         "outputConsole",
         "toJSON",
-        "triggerServerEvent"
+        "triggerServerEvent",
+        "dxDrawImage",
+        "svgCreate"
     ]
 }

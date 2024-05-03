@@ -10,10 +10,14 @@
     <script src="/shared/gameTextTypeEnum.lua" type="shared" cache="false" />
 
     <script src="/client/utils_c.lua" type="client" cache="false" />
+    <script src="/client/svg_c.lua" type="client" cache="false" />
     <script src="/client/gameText_c.lua" type="client" cache="false" />
     <script src="/client/selectMenu_c.lua" type="client" cache="false" />
+    <script src="/client/inventoryList_c.lua" type="client" cache="false" />
     <script src="/exports_c.lua" type="client" cache="false" />
 
     <export function="showClientGameText" type="client" />
     <export function="showClientSelectMenu" type="client" />
+    
+    <file src="/resources/unknownIcon.png" download="true" />
 </meta>

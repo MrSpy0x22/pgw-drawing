@@ -141,8 +141,6 @@ SelectMenu.create = function(id, title, data, columns, elementsPerPage, color, e
 end
 
 SelectMenu.destroy = function()
-    SelectMenu.config.isVisible = false
-
     removeEventHandler("onClientRender", root, SelectMenu.draw)
     removeEventHandler("onClientKey", root, SelectMenu.handleKeys)
 
@@ -271,7 +269,7 @@ SelectMenu.handleKeys = function(key, pressing)
     end
 end
 
-addCommandHandler("testmenu", function()
+--[[addCommandHandler("testmenu", function()
     if SelectMenu.config.isVisible then
         SelectMenu.destroy()
         outputChatBox("Hiding menu")
@@ -283,13 +281,13 @@ addCommandHandler("testmenu", function()
                 { "test2",  "$0" },
                 { "test3",  "$0" },
                 { "test4",  "$0" },
-                --[[{ "test5",  "$0" },
+                { "test5",  "$0" },
                 { "test6",  "$0" },
                 { "test7",  "$0" },
                 { "test8",  "$0" },
                 { "test9",  "$0" },
                 { "test10", "$0" },
-                { "test11", "$0" },]]
+                { "test11", "$0" },
             }, 2, 7, tocolor(192, 233, 79, 255), true)
         outputChatBox("Showing menu")
     end
@@ -312,4 +310,4 @@ addEventHandler("onClientRender", root, function()
         dxDrawText(tostring(SelectMenu.config.skip), 1771, 891, 1910, 1044, tocolor(255, 255, 255, 255), 1.00, "default",
             "left", "top", false, false, false, false, false)
     end
-end)
+end)]]
