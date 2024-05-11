@@ -4,6 +4,7 @@ Ten moduł rysuje różnego rodzaju elementy po stronie klienta. Celem modułu j
 # API
  * [GameText](#gameText),
  * [SelectMenu](#select-menu),
+ * [PlayerBar](#player-bar),
 
 ## GameText
 Moduł pokazuje tekst na ekranie. Pokazywanie i ukrywanie tekstu jest animowane.
@@ -14,7 +15,7 @@ Moduł pokazuje tekst na ekranie. Pokazywanie i ukrywanie tekstu jest animowane.
 |:----------------|:--------------:|--------------:|
 | styl            | `number`       | tak           |
 | text            | `string`       | tak           | 
-| duration        | `number)`      | tak           |
+| duration        | `number`       | tak           |
 | r               | `number`       | nie           |
 | g               | `number`       | nie           |
 | b               | `number`       | nie           |
@@ -70,3 +71,17 @@ Moduł rysuje listę elementów do wyboru.
  * `itemSelected` - Określa sposób wyjścia z menu (`true` jeżeli nastąpił wybór lub `false` jeżeli klient wyszedł z menu),
  * `selectedItemIndex` - Index na w tabeli `data`, która została wysłana w parametrze funkcji `showClientSelectMenu(..)`,
  * `highlightedItem` - Pozycja zaznaczenia na liście (od `1` do wartości określonej w parametrze `elementsPerPage` funkcji `showClientSelectMenu(..)`)  
+
+## Player Bar
+Pasek na dole ekranu, który zawiera sekcje z podstawowymi informacjami.
+
+`function setClientPlayerBarVisible(visibilityFlag, forPlayer)`
+
+| **Parametr**    | **Typ**        | **Wymagany?** |
+|:----------------|:--------------:|--------------:|
+| visibilityFlag  | `boolean`      | tak           |
+| forPlayer       | `element`      | nie           |
+
+### Opis parametrów
+ * `visibilityFlag` - Określa, czy pasek powinien być rysowany,
+ * `forPlayer` - Pozwala określić informacje którego gracza będą widoczne na pasku (domyślnie `localPlayer`),

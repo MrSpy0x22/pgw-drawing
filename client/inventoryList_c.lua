@@ -111,7 +111,12 @@ end
 
 InventoryList.draw = function()
     local accentR, accentG, accentB = getColorFromString(InventoryList.config.color)
+    local titleScale, capacityScale, nameScale, amountScale = 1.60, 2.00, 1.50, 1.20
 
+    if screenH <= 720 then
+        titleScale, capacityScale, nameScale, amountScale = 1.20, 1.50, 1.10, 0.90
+    end
+    
     -- Ramka
     dxDrawRectangle(screenW * 0.7448, screenH * 0.4954, screenW * 0.2094, screenH * 0.4130, tocolor(0, 0, 0, 126), false)
     dxDrawRectangle(screenW * 0.7448, screenH * 0.4954, screenW * 0.2094, screenH * 0.0509, tocolor(accentR, accentG,
@@ -125,12 +130,12 @@ InventoryList.draw = function()
 
     -- Tytuł
     dxDrawBorderedText(1, "Schowek", screenW * 0.7495, screenH * 0.4954, screenW * 0.8964, screenH * 0.5463,
-        tocolor(255, 255, 255, 255), 1.60, 1.60, "diploma", "left", "center", false, false, false, false, false)
+        tocolor(255, 255, 255, 255), titleScale, "diploma", "left", "center", false, false, false, false, false)
 
     -- Limit
     local capacityText = string.format("%d/%d", InventoryList.config.rows, InventoryList.config.limit)
     dxDrawBorderedText(1, capacityText, screenW * 0.8995, screenH * 0.4954, screenW * 0.9490, screenH * 0.5463,
-        tocolor(255, 255, 255, 255), 2.00, 2.00, "ddefault", "right", "center", false, false, false, false, false)
+        tocolor(255, 255, 255, 255), capacityScale, "ddefault", "right", "center", false, false, false, false, false)
 
     -- Elementy listy
     for i = 1, InventoryList.config.pageSize do
@@ -159,12 +164,12 @@ InventoryList.draw = function()
 
         -- Nazwa przedmiotu
         dxDrawText(item.name or "???", screenW * 0.7885, screenH * (0.5593 + offsetY),
-            screenW * 0.9349, screenH * (0.5870 + offsetY), tocolor(fgR, fgG, fgB), 1.50, 1.50, "default-bold", "left",
+            screenW * 0.9349, screenH * (0.5870 + offsetY), tocolor(fgR, fgG, fgB), nameScale, "default-bold", "left",
             "top", false, false, false, false, false)
 
         -- Opis przedmiotu
         dxDrawText(item.amountText, screenW * 0.7885, screenH * (0.5870 + offsetY), screenW * 0.9349,
-            screenH * (0.6120 + offsetY), tocolor(fgR, fgG, fgB), 1.20, 1.20, "default-bold", "left", "center", false,
+            screenH * (0.6120 + offsetY), tocolor(fgR, fgG, fgB), amountScale, "default-bold", "left", "center", false,
             false, false, false, false)
     end
 
@@ -239,7 +244,7 @@ InventoryList.getImageForItem = function(itemId)
 
     return "/resources/" .. iconFilleName
 end
---[[
+
 addCommandHandler("invtest", function()
     if InventoryList.config.isVisible then
         InventoryList.destroy()
@@ -258,7 +263,7 @@ addCommandHandler("invtest", function()
             {name = "Item 11", amountText = "Plantable, 5szt", model = 0 },
         }, "#5869FA", 10)
     end
-end)
+end)--[[
 addEventHandler("onClientRender", root, function()
     if InventoryList.config.isVisible then
         dxDrawText("Selected:", 1622, 851, 1761, 1044, tocolor(255, 255, 255, 255), 1.00, "default", "right", "top",

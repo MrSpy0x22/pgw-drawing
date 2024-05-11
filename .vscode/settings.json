@@ -27,6 +27,20 @@
         "toJSON",
         "triggerServerEvent",
         "dxDrawImage",
-        "svgCreate"
+        "svgCreate",
+        "getPlayerName",
+        "getElementData",
+        "dxGetTextSize",
+        "getPlayerNametagColor",
+        "resourceRoot",
+        "getThisResource",
+        "call",
+        "getResourceFromName",
+        "get",
+        "getResourceName",
+        "outputServerLog",
+        "killTimer",
+        "setTimer",
+        "getResourceState"
     ]
 }
