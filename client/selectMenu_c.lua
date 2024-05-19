@@ -173,7 +173,7 @@ SelectMenu.draw = function()
     dxDrawLine(posX, posY + sizeY, posX + sizeX, posY + sizeY, color)
     dxDrawRectangle(posX, posY, sizeX, titleSizeY, color, false)                           -- Tło tytułu
     dxDrawBorderedText(1, SelectMenu.config.title, posX, posY, posX + sizeX, posY + titleSizeY,
-        tocolor(255, 255, 255, 255), 1.20, "diploma", "center", "center", false, false, false, false, false) -- Tytuł
+        tocolor(255, 255, 255, 255), 1.20, 1.20, "diploma", "center", "center", false, false, false, false, false) -- Tytuł
 
     -- Rysowanie zaznaczanie i scroll-a
     local posOffxetY, offsetX, offsetY = 11, 10, 42

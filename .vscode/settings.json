@@ -41,6 +41,11 @@
         "outputServerLog",
         "killTimer",
         "setTimer",
-        "getResourceState"
+        "getResourceState",
+        "getElementPosition",
+        "getDistanceBetweenPoints3D",
+        "isLineOfSightClear",
+        "getCameraMatrix",
+        "getScreenFromWorldPosition"
     ]
 }

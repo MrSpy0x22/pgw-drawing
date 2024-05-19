@@ -130,12 +130,12 @@ InventoryList.draw = function()
 
     -- Tytuł
     dxDrawBorderedText(1, "Schowek", screenW * 0.7495, screenH * 0.4954, screenW * 0.8964, screenH * 0.5463,
-        tocolor(255, 255, 255, 255), titleScale, "diploma", "left", "center", false, false, false, false, false)
+        tocolor(255, 255, 255, 255), titleScale, titleScale, "diploma", "left", "center", false, false, false, false, false)
 
     -- Limit
     local capacityText = string.format("%d/%d", InventoryList.config.rows, InventoryList.config.limit)
     dxDrawBorderedText(1, capacityText, screenW * 0.8995, screenH * 0.4954, screenW * 0.9490, screenH * 0.5463,
-        tocolor(255, 255, 255, 255), capacityScale, "ddefault", "right", "center", false, false, false, false, false)
+        tocolor(255, 255, 255, 255), capacityScale, capacityScale, "ddefault", "right", "center", false, false, false, false, false)
 
     -- Elementy listy
     for i = 1, InventoryList.config.pageSize do

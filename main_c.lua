@@ -10,6 +10,11 @@ local configurationAttempts = 0
 
 ------------------------------------------------------------------------------------------------------------------------
 
+setTimer(function()
+    Text3D.addOrUpdate("textXXXX", "Test\ntext", 410.927, -1718.329, 8.811, 50, 1, "default-bold", tocolor(255, 0, 255), 1, 20, 20)
+    addOrUpdateText3D("textYYYY", "Test text", 415.927, -1718.329, 8.811, 50, 1, "default-bold", tocolor(255, 255, 0), 1, 20, 20)
+end, 10000, 1)
+
 function delayedConfiguration()
     local resToCall = getResourceFromName("pgw-play")
 

@@ -17,6 +17,7 @@
     <script src="/client/selectMenu_c.lua" type="client" cache="false" />
     <script src="/client/inventoryList_c.lua" type="client" cache="false" />
     <script src="/client/playerBar_c.lua" type="client" cache="false" />
+    <script src="/client/text3d_c.lua" type="client" cache="false" />
     <script src="/exports_c.lua" type="client" cache="false" />
 
     <script src="/main_c.lua" type="client" cache="false" />
@@ -25,6 +26,8 @@
     <export function="showClientGameText" type="client" />
     <export function="showClientSelectMenu" type="client" />
     <export function="setClientPlayerBarVisible" type="client" />
+    <export function="addOrUpdateText3D" type="client" />
+    <export function="removeText3D" type="client" />
     
     <file src="/resources/badge.png" download="true" />
     <file src="/resources/group.png" download="true" />
