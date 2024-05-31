@@ -1,4 +1,4 @@
---#region Funkcje i zmienne pomocnicze
+--#region PRIVATE
 
 local screenW, screenH = guiGetScreenSize()
 local controls = {
@@ -27,26 +27,12 @@ local controls = {
     "steer_backward",
 }
 
-function enableControl()
-    local temp = {}
+function takeControls(take)
+    take = take == false
+
     for _, v in ipairs(controls) do
-        temp[v] = false
-        toggleControl(v, temp[v])
+        toggleControl(v, take)
     end
-
-    return temp
-end
-
-function disableControl()
-    for k, v in pairs(SelectMenu.config.controls) do
-        if v == isControlEnabled(k) then
-            toggleControl(k, true)
-        else
-            outputConsole("%s: %s ~= %s", k, tostring(v), isControlEnabled(k))
-        end
-    end
-
-    return {}
 end
 
 --#endregionrn temp
@@ -62,7 +48,7 @@ SelectMenu.config = {
     pageSize = 6,
     columns = 1,
     rows = 0,
-    color = "#FFFFFF",
+    color = tocolor(255, 255, 255),
     callbackEventName = nil,
     callbackEventSendTo = nil,
     controls = {},
@@ -132,7 +118,7 @@ SelectMenu.create = function(id, title, data, columns, elementsPerPage, color, e
     SelectMenu.config.color = color
     SelectMenu.config.callbackEventName = eventName
     SelectMenu.config.callbackEventSendTo = sendToElement
-    SelectMenu.config.controls = enableControl()
+    takeControls(true)
 
     addEventHandler("onClientRender", root, SelectMenu.draw)
     addEventHandler("onClientKey", root, SelectMenu.handleKeys)
@@ -147,7 +133,7 @@ SelectMenu.destroy = function()
     SelectMenu.config.menuId = 0
     SelectMenu.config.title = ""
     SelectMenu.config.isVisible = false
-    SelectMenu.config.color = "#FFFFFFFF"
+    SelectMenu.config.color = tocolor(255, 255, 255)
     SelectMenu.config.selected = 1
     SelectMenu.config.highlighted = 1
     SelectMenu.config.columns = 1
@@ -157,7 +143,7 @@ SelectMenu.destroy = function()
     SelectMenu.config.data = {}
     SelectMenu.config.callbackEventName = nil
     SelectMenu.config.callbackEventSendTo = nil
-    SelectMenu.config.controls = disableControl()
+    takeControls(false)
 end
 
 SelectMenu.draw = function()
