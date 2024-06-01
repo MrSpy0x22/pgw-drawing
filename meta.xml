@@ -7,8 +7,10 @@
         description="Drawing module for Polskiegw.pl."
     />
 
+    <script src="/shared/string.lua" type="shared" cache="false" />
     <script src="/shared/events.lua" type="shared" cache="false" />
     <script src="/shared/gameTextTypeEnum.lua" type="shared" cache="false" />
+    <script src="/shared/colorEnum.lua" type="shared" cache="false" />
 
     <script src="/client/helpers/levelHelper.lua" type="client" cache="false" />
     <script src="/client/utils_c.lua" type="client" cache="false" />

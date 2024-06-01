@@ -48,20 +48,34 @@ Moduł rysuje listę elementów do wyboru.
 |:----------------|:--------------:|--------------:|
 | id              | `number`       | tak           |
 | title           | `string(1-64)` | tak           | 
+| data            | `table`        | tak           | 
 | columns         | `number(1-2)`  | tak           |
 | elementsPerPage | `number`       | tak           |
 | color           | `tocolor()`    | tak           |
 | evetName        | `string`       | tak           |
 | sendToElement   | `element`      | tak           |
+| formatType      | `number`       | nie           |
 
 ### Opis parametrów
  * `id` - Identyfikator menu (zwracany w evencie),
  * `title` - Wyświetlany tytuł menu
+ * `data` - Tabela z danymi
  * `columns` - Liczba widocznych kolumn (1 lub 2; kolumna 2 jest mniejsza i wyjustowana jest do lewej strony),
  * `elementsPerPage` - Określa rozmiar menu (wysokość) przez liczbę wyświetlanych elementów na raz,
  * `color` - Kolor ramki na górze menu,
  * `eventName` - Event po stronie serwera, który zostanie wywołany po wyborze elementu lub po wyjściu z menu,
  * `sendToElement` - Element, do którego event ma zostać wysłany,
+ * `formatType` - Określa w jaki sposób ma być formatowana skrajnie prawa kolumna (określająca wartość),
+
+### Opis danych
+Dane to tablica rekordów poniższego formatu:
+
+`{ name = "___", value = "___", format = ___, enabled = ___ }`
+
+ * `name` - Nazwa elementu,
+ * `value` - wartość (jeżeli inna niż `1 (NONE)` to wartośc _*musi*_ konwertować się na `number`),
+ * `format` - Sprawdź [Opis formatów](#opis-formatów),
+ * `enabled` - Fraga oznaczająca, czy element może zostać wybrany (+ efekty wizualne),
 
 ### Opis event-y
 
@@ -71,6 +85,12 @@ Moduł rysuje listę elementów do wyboru.
  * `itemSelected` - Określa sposób wyjścia z menu (`true` jeżeli nastąpił wybór lub `false` jeżeli klient wyszedł z menu),
  * `selectedItemIndex` - Index na w tabeli `data`, która została wysłana w parametrze funkcji `showClientSelectMenu(..)`,
  * `highlightedItem` - Pozycja zaznaczenia na liście (od `1` do wartości określonej w parametrze `elementsPerPage` funkcji `showClientSelectMenu(..)`)  
+
+### Opis formatów
+
+ * `1 (NONE)` - Zwykły tekst,
+ * `2 (MONEY)` - Format określający pieniądze,
+ * `3 (PT), 4 (XPT), 5 (FPT), 6 (JPT)` - Format określający odpowiednie punkty,
 
 ## Player Bar
 Pasek na dole ekranu, który zawiera sekcje z podstawowymi informacjami.

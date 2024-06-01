@@ -1,3 +1,14 @@
+SelectMenu = {}
+
+SelectMenu.format = {
+    NONE = 1,
+    MONEY = 2,
+    PT = 3,
+    XPT = 4,
+    FPT = 5,
+    JPT = 6,
+}
+
 --#region PRIVATE
 
 local screenW, screenH = guiGetScreenSize()
@@ -27,7 +38,14 @@ local controls = {
     "steer_backward",
 }
 
-function takeControls(take)
+local dataAttributesValidation = {
+    { name = "name", type = "string" },
+    { name = "value", type = "string" },
+    { name = "format", type = "number" },
+    { name = "enabled", type = "boolean" },
+}
+
+local function takeControls(take)
     take = take == false
 
     for _, v in ipairs(controls) do
@@ -35,9 +53,70 @@ function takeControls(take)
     end
 end
 
---#endregionrn temp
+local function validateData(data, outputMessages)
+    local isValid = true
 
-SelectMenu = {}
+    if type(data) ~= "table" then
+        isValid = false
+    else
+        for k, v in ipairs(data) do
+            outputChatBox(toJSON(v))
+            for _, attr in ipairs(dataAttributesValidation) do
+                local key = attr.name
+                local keyType = attr.type
+
+                if not key or not keyType then
+                    isValid = false
+
+                    if outputMessages then
+                        outputDebugString(string.format("Nieprawidłowy obiekt: nieokreślony błąd walidacji! (idx: %d)", k), 1)
+                    end
+                elseif v[key] == nil then
+                    isValid = false
+        
+                    if not isValid and outputMessages then
+                        outputDebugString(string.format("Nieprawidłowy obiekt: brak danych dla \"%s\" (ids: %d)", key, k), 1)
+                    end
+                elseif type(v[key]) ~= keyType then
+                    isValid = false
+
+                    if not isValid and outputMessages then
+                        outputDebugString(string.format("Nieprawidłowy obiekt: zły typ dla \"%s\" -> %s != %s (ids: %d)", key,
+                            tostring(keyType), type(v[key]), k), 1)
+                    end
+                    break
+                end
+            end
+        end
+    end
+
+    return isValid
+end
+
+local function formatText(formatType, text)
+    local textResult
+    if type(formatType) == "number" then
+        if formatType == SelectMenu.format.MONEY then
+            textResult = String.toNumber(tonumber(text), " ", "$", false)
+        elseif formatType == SelectMenu.format.PT then
+            textResult = String.toNumber(tonumber(text), " ", "pt", true)
+        elseif formatType == SelectMenu.format.XPT then
+            textResult = String.toNumber(tonumber(text), " ", "xpt", true)
+        elseif formatType == SelectMenu.format.FPT then
+            textResult = String.toNumber(tonumber(text), " ", "fpt", true)
+        elseif formatType == SelectMenu.format.JPT then
+            textResult = String.toNumber(tonumber(text), " ", "jpt", true)
+        else
+            textResult = tostring(text)
+        end
+
+        return textResult
+    end
+
+    return false
+end
+
+--#endregionrn temp
 
 SelectMenu.config = {
     menuId = 0,
@@ -56,7 +135,7 @@ SelectMenu.config = {
     data = {}
 }
 
-SelectMenu.create = function(id, title, data, columns, elementsPerPage, color, eventName, sendToElement)
+SelectMenu.create = function(id, title, data, columns, elementsPerPage, color, eventName, sendToElement, formatType)
     if elementsPerPage == nil or elementsPerPage < 1 or elementsPerPage > 7 then
         columns = 7
     end
@@ -64,46 +143,7 @@ SelectMenu.create = function(id, title, data, columns, elementsPerPage, color, e
         columns = 1
     end
 
-    local tempData = {}
-    local rowCount, colCount = 0, 0
-    for rowIdx, rowData in ipairs(data) do
-        local rowDataType = type(rowData)
-        rowCount = rowCount + 1
-        colCount = 0
-
-        if columns > 1 and rowDataType == "table" then
-            for colIdx, colData in ipairs(rowData) do
-                colCount = colCount + 1
-
-                if colCount > columns then
-                    outputDebugString(
-                        string.format("Nieprawidłowa struktura danych - oczekiwano liczba kolumn to %d (%d:%d)!",
-                            columns, rowIdx, colIdx),
-                        1)
-                    return false
-                end
-
-                local colDataType = type(colData)
-
-                if colDataType ~= "string" then
-                    outputDebugString(
-                        string.format("Oczekiwano tekstu zamiast \"%s\" (%d:%d)!", colDataType, rowIdx, colIdx),
-                        1)
-
-                    return false
-                end
-            end
-
-            table.insert(tempData, rowData)
-        elseif columns == 1 and rowDataType == "string" then
-            table.insert(tempData, rowData)
-        else
-            outputDebugString(
-                string.format("Nieprawidłowa struktura danych (idx: %d)!",
-                    columns, rowIdx),
-                1)
-        end
-    end
+    if not validateData(data, true) then return false end
 
     SelectMenu.config.menuId = id
     SelectMenu.config.title = title
@@ -112,12 +152,13 @@ SelectMenu.create = function(id, title, data, columns, elementsPerPage, color, e
     SelectMenu.config.columns = columns
     SelectMenu.config.pageSize = elementsPerPage
     SelectMenu.config.skip = 0
-    SelectMenu.config.rows = rowCount
-    SelectMenu.config.data = tempData
+    SelectMenu.config.rows = #data
+    SelectMenu.config.data = data
     SelectMenu.config.isVisible = true
     SelectMenu.config.color = color
     SelectMenu.config.callbackEventName = eventName
     SelectMenu.config.callbackEventSendTo = sendToElement
+    SelectMenu.config.formatType = formatType or SelectMenu.format.NONE
     takeControls(true)
 
     addEventHandler("onClientRender", root, SelectMenu.draw)
@@ -166,7 +207,9 @@ SelectMenu.draw = function()
     local firstItemX, firstItemY = posX + offsetX, posY + titleSizeY + posOffxetY
     local itemSizeX, itemSizeY = 570, 32
     local i = SelectMenu.config.highlighted - 1
-    local highlightColor = tocolor(254, 255, 255, 170)
+    local itemSelected = SelectMenu.config.selected
+    local isEnabled = SelectMenu.config.data[itemSelected].enabled == true
+    local highlightColor = tocolor(254, 255, 255, isEnabled and 170 or 80)
     dxDrawRectangle(firstItemX, firstItemY + (offsetY * i), itemSizeX - offsetX * 2, itemSizeY, highlightColor, false)
 
     local progressBarOffsetX, progressBarPosX = 10, posX + sizeX
@@ -188,17 +231,32 @@ SelectMenu.draw = function()
             break
         end
 
+        local name = SelectMenu.config.data[index].name or "???"
+        local enabled = SelectMenu.config.data[index].enabled == true
         local itemPosY = firstItemY + (offsetY * (i - 1))
-        local color = i == SelectMenu.config.highlighted and tocolor(0, 0, 0, 255) or tocolor(255, 255, 255, 255)
+        local color = i == SelectMenu.config.highlighted and tocolor(0, 0, 0, enabled and 255 or 100) or tocolor(255, 255, 255, enabled and 255 or 100)
 
         if SelectMenu.config.columns == 2 then
-            dxDrawText(SelectMenu.config.data[index][1], textLeftPosX, itemPosY, textLeftSizeX + textLeftSizeX,
-                itemPosY + textSizeY, color, 1.50, "default-bold", "left", "center", false, false, true, false, false)
-            dxDrawText(SelectMenu.config.data[index][2], textRightPosX, itemPosY, textRightPosX + textRightSizeX,
-                itemPosY + textSizeY, color, 1.50, "default-bold", "right", "center", false, false, true, false, false)
+            local formatType = SelectMenu.config.data[index].format
+            local value = SelectMenu.config.data[index].value
+            local valueColor = color
+
+            if formatType ~= SelectMenu.format.NONE then
+                local value = tonumber(value)
+
+                if type(value) == "number" and value < 0 then
+                    local alpha = enabled and 255 or 100
+                    local r, g, b = getColorFromString(ColorEnum.GT_RED)
+                    valueColor = tocolor(r, g, b, alpha)
+                end
+            end
+
+            dxDrawText(name, textLeftPosX, itemPosY, textLeftSizeX + textLeftSizeX, itemPosY + textSizeY, color,
+                1.50, "default-bold", "left", "center", false, false, true, false, false)
+            dxDrawText(formatText(formatType, value), textRightPosX, itemPosY, textRightPosX + textRightSizeX,
+                itemPosY + textSizeY, valueColor, 1.50, "default-bold", "right", "center", false, false, true, false, false)
         else
-            dxDrawText(SelectMenu.config.data[index], textLeftPosX, itemPosY,
-                textLeftSizeX + textLeftSizeX + textRightSizeX,
+            dxDrawText(name, textLeftPosX, itemPosY, textLeftSizeX + textLeftSizeX + textRightSizeX,
                 itemPosY + textSizeY, color, 1.50, "default-bold", "left", "center", false, false, true, false, false)
         end
     end
@@ -237,12 +295,17 @@ SelectMenu.handleKeys = function(key, pressing)
             SelectMenu.config.selected = selected - 1
         end
     elseif (key == "enter" or key == "lshift") and pressing then
-        SelectMenu.destroy()
+        local selected = SelectMenu.config.selected
+        local isEnabled = SelectMenu.config.data[selected].enabled == true
 
-        local eventName = SelectMenu.config.callbackEventName
-        if eventName then
-            triggerServerEvent(eventName, SelectMenu.config.callbackEventSendTo, SelectMenu.config.menuId, true,
-                SelectMenu.config.selected, SelectMenu.config.highlighted)
+        if isEnabled then
+            SelectMenu.destroy()
+    
+            local eventName = SelectMenu.config.callbackEventName
+            if eventName then
+                triggerServerEvent(eventName, SelectMenu.config.callbackEventSendTo, SelectMenu.config.menuId, true,
+                    SelectMenu.config.selected, SelectMenu.config.highlighted)
+            end
         end
     elseif (key == "backspace" or key == "f") and pressing then
         SelectMenu.destroy()
