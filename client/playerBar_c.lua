@@ -45,8 +45,8 @@ PlayerBar.draw = function()
     dxDrawRectangle(screenW * 0.0000, screenH * 0.9630, screenW * 1.0000, screenH * 0.0370, tocolor(0, 0, 0, 79), false)
 
     -- Wersja
-    dxDrawText("PGW ".. data.ver, screenW * 0.9431, screenH * 0.9605, screenW * 0.9979, screenH * 0.9927,
-        tocolor(145, 141, 139, 255), 1.00, "default", "left", "top", false, false, false, false, false)
+    --dxDrawText("PGW ".. data.ver, screenW * 0.9431, screenH * 0.9605, screenW * 0.9979, screenH * 0.9927,
+    --   tocolor(145, 141, 139, 255), 1.00, "default", "left", "top", false, false, false, false, false)
 
     -- Pasek poziomu
     dxDrawRectangle(screenW * 0.0000, screenH * 0.9972, (screenW * 1.0000) * data.levelProgress, screenH * 0.0028, tocolor(174, 4, 4, 255), false)
@@ -58,17 +58,17 @@ PlayerBar.draw = function()
     -- Nick
     local elementText = string.format("%s (%d)", data.nick, data.id)
     sizeX = dxGetTextSize(elementText, 0, fontScale, "default-bold", false, false)
-    
+
     sizeX = sizeX * screenScale
     currentX = screenW * 0.0156
     dxDrawText(elementText, currentX, screenH * 0.9639, sizeX, screenH * 0.9972, tocolor(pR, pG, pB, 255),
         fontScale, "default-bold", "left", "center", false, false, false, false, false)
-    
+
     -- Punkty
     currentX = currentX + sizeX + offsetX
     sizeX = iconW
     dxDrawImage(currentX, screenH * 0.9687, sizeX, screenH * 0.0241, "/resources/scores.png", 0, 0, 0, tocolor(255, 255, 255, 255), false)
-    
+
     currentX = currentX + sizeX + iconRightMargin
     elementText = string.format("%.02f", data.scores)
     sizeX = dxGetTextSize(elementText, 0, fontScale, "default-bold", false, false)
@@ -78,40 +78,40 @@ PlayerBar.draw = function()
     currentX = currentX + sizeX + offsetX
     sizeX = iconW
     dxDrawImage(currentX, screenH * 0.9687, sizeX, screenH * 0.0241, "/resources/levelBadge.png", 0, 0, 0, tocolor(255, 255, 255, 255), false)
-    
+
     currentX = currentX + sizeX + iconRightMargin
     elementText = string.format("%d/%d", data.level, CLevelMax)
     sizeX = dxGetTextSize(elementText, 0, fontScale, "default-bold", false, false)
     dxDrawText(elementText, currentX, screenH * 0.9639, sizeX, screenH * 0.9972, tocolor(255, 255, 255, 255), fontScale, "default-bold", "left", "center", false, false, false, false, false)
-    
+
     -- Xpunkty
-    if data.xscores then 
+    if data.xscores then
         currentX = currentX + sizeX + offsetX
         sizeX = iconW
         dxDrawImage(currentX, screenH * 0.9687, sizeX, screenH * 0.0241, "/resources/xscores.png", 180, 0, 0, tocolor(255, 255, 255, 255), false)
-        
+
         currentX = currentX + sizeX + iconRightMargin
         elementText = tostring(data.xscores)
         sizeX = dxGetTextSize(elementText, 0, fontScale, "default-bold", false, false)
         dxDrawText(elementText, currentX, screenH * 0.9639, sizeX, screenH * 0.9972, tocolor(255, 255, 255, 255), fontScale, "default-bold", "left", "center", false, false, false, false, false)
     end
-    
+
     -- Frakcja
     if data.fract then
         currentX = currentX + sizeX + offsetX
         sizeX = iconW
         dxDrawImage(currentX, screenH * 0.9687, sizeX, screenH * 0.0241, "/resources/group.png", 0, 0, 0, tocolor(255, 255, 255, 255), false)
-        
+
         currentX = currentX + sizeX + iconRightMargin
         elementText = CFractionsArray[data.fract] or data.fract
         sizeX = dxGetTextSize(elementText, 0, fontScale, "default-bold", false, false)
         dxDrawText(elementText, currentX, screenH * 0.9639, sizeX, screenH * 0.9972, tocolor(255, 255, 255, 255), fontScale, "default-bold", "left", "center", false, false, false, false, false)
-        
+
         -- Ranga
         currentX = currentX + sizeX + offsetX
         sizeX = iconW
         dxDrawImage(currentX, screenH * 0.9687, sizeX, screenH * 0.0241, "/resources/rank.png", 0, 0, 0, tocolor(255, 255, 255, 255), false)
-        
+
         currentX = currentX + sizeX + iconRightMargin
         if data.frank >= CFRankMax then
             elementText = tostring(data.frank)
@@ -120,46 +120,37 @@ PlayerBar.draw = function()
         end
         sizeX = dxGetTextSize(elementText, 0, fontScale, "default-bold", false, false)
         dxDrawText(elementText, currentX, screenH * 0.9639, sizeX, screenH * 0.9972, tocolor(255, 255, 255, 255), fontScale, "default-bold", "left", "center", false, false, false, false, false)
-            
+
         -- Punkty frakcji
         currentX = currentX + sizeX + offsetX
         sizeX = iconW
         dxDrawImage(currentX, screenH * 0.9687, sizeX, screenH * 0.0241, "/resources/weapon.png", 0, 0, 0, tocolor(255, 255, 255, 255), false)
-        
+
         currentX = currentX + sizeX + iconRightMargin
         elementText = tostring(data.fscores)
         sizeX = dxGetTextSize(elementText, 0, fontScale, "default-bold", false, false)
         dxDrawText(elementText, currentX, screenH * 0.9639, sizeX, screenH * 0.9972, tocolor(255, 255, 255, 255), fontScale, "default-bold", "left", "center", false, false, false, false, false)
     end
 
-    -- TODO: Praca
     if data.job then
         currentX = currentX + sizeX + offsetX
         sizeX = iconW
         dxDrawImage(currentX, screenH * 0.9667, sizeX, screenH * 0.0241, "/resources/job.png", 0, 0, 0, tocolor(255, 255, 255, 255), false)
-        
+
         currentX = currentX + sizeX + iconRightMargin
-        sizeX = dxGetTextSize("Job Name", 0, fontScale, "default-bold", false, false)
-        dxDrawText("Job Name", currentX, screenH * 0.9639, sizeX, screenH * 0.9972, tocolor(255, 255, 255, 255), fontScale, "default-bold", "left", "center", false, false, false, false, false)
-            
+        sizeX = dxGetTextSize(data.job, 0, fontScale, "default-bold", false, false)
+        dxDrawText(data.job, currentX, screenH * 0.9639, sizeX, screenH * 0.9972, tocolor(255, 255, 255, 255), fontScale, "default-bold", "left", "center", false, false, false, false, false)
+
         -- Praca
         currentX = currentX + sizeX + offsetX
         sizeX = iconW
         dxDrawImage(currentX, screenH * 0.9667, sizeX, screenH * 0.0241, "/resources/jobScores.png", 0, 0, 0, tocolor(255, 255, 255, 255), false)
-        
+
         currentX = currentX + sizeX + iconRightMargin
-        sizeX = dxGetTextSize("100", 0, fontScale, "default-bold", false, false)
-        dxDrawText("100", currentX, screenH * 0.9639, sizeX, screenH * 0.9972, tocolor(255, 255, 255, 255), fontScale, "default-bold", "left", "center", false, false, false, false, false)
+        sizeX = dxGetTextSize(tostring(data.jscores or 0), 0, fontScale, "default-bold", false, false)
+        dxDrawText(tostring(data.jscores or 0), currentX, screenH * 0.9639, sizeX, screenH * 0.9972, tocolor(255, 255, 255, 255), fontScale, "default-bold", "left", "center", false, false, false, false, false)
     end
 end
-
-addCommandHandler("pbtest", function()
-    if PlayerBar.config.isVisible then
-        PlayerBar.destroy()
-    else
-        PlayerBar.create()
-    end
-end)
 
 PlayerBar.getData = function(forPlayer)
     local ver, stars, nick, id, scores, xscores, level, levelProgress, fract, frank, fscores, job, jscores
@@ -174,7 +165,7 @@ PlayerBar.getData = function(forPlayer)
     fract = getElementData(forPlayer, "player.fract", false)
     frank = getElementData(forPlayer, "player.frank", false)
     fscores = getElementData(forPlayer, "player.fscores", false)
-    job = getElementData(forPlayer, "player.job", false)
+    job = getJobName(getPlayerJob(forPlayer))
     jscores = getElementData(forPlayer, "player.jscores", false)
 
     -- Nadpisywanie nazwyidentyfikatora frakcji

@@ -60,7 +60,6 @@ local function validateData(data, outputMessages)
         isValid = false
     else
         for k, v in ipairs(data) do
-            outputChatBox(toJSON(v))
             for _, attr in ipairs(dataAttributesValidation) do
                 local key = attr.name
                 local keyType = attr.type
