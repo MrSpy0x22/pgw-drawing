@@ -46,6 +46,12 @@
         "getDistanceBetweenPoints3D",
         "isLineOfSightClear",
         "getCameraMatrix",
-        "getScreenFromWorldPosition"
+        "getScreenFromWorldPosition",
+        "dxCreateRenderTarget",
+        "dxSetRenderTarget",
+        "dxSetBlendMode",
+        "getPedWeapon",
+        "dxCreateFont",
+        "isPedInVehicle"
     ]
 }

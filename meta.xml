@@ -7,6 +7,8 @@
         description="Drawing module for Polskiegw.pl."
     />
 
+    <min_mta_version server="1.6.0" client="1.6.0" />
+
     <script src="/shared/string.lua" type="shared" cache="false" />
     <script src="/shared/events.lua" type="shared" cache="false" />
     <script src="/shared/gameTextTypeEnum.lua" type="shared" cache="false" />
@@ -15,12 +17,12 @@
     <script src="/client/helpers/levelHelper.lua" type="client" cache="false" />
     <script src="/client/helpers/jobHelper.lua" type="client" cache="false" />
     <script src="/client/utils_c.lua" type="client" cache="false" />
-    <script src="/client/svg_c.lua" type="client" cache="false" />
     <script src="/client/gameText_c.lua" type="client" cache="false" />
     <script src="/client/selectMenu_c.lua" type="client" cache="false" />
     <script src="/client/inventoryList_c.lua" type="client" cache="false" />
     <script src="/client/playerBar_c.lua" type="client" cache="false" />
     <script src="/client/text3d_c.lua" type="client" cache="false" />
+    <script src="/client/deathList_c.lua" type="client" cache="false" />
     <script src="/exports_c.lua" type="client" cache="false" />
 
     <script src="/main_c.lua" type="client" cache="false" />
@@ -31,7 +33,8 @@
     <export function="setClientPlayerBarVisible" type="client" />
     <export function="addOrUpdateText3D" type="client" />
     <export function="removeText3D" type="client" />
-    
+    <export function="addDeathReason" type="client" />
+
     <file src="/resources/badge.png" download="true" />
     <file src="/resources/group.png" download="true" />
     <file src="/resources/job.png" download="true" />
@@ -47,6 +50,8 @@
     <file src="/resources/car.png" download="true" />
     <file src="/resources/xscores.png" download="true" />
     <file src="/resources/ghost.png" download="true" />
+    
+    <file src="/resources/deathlist/gtaweap3.ttf" download="true" />
 
     <download_priority_group>1</download_priority_group>
 </meta>

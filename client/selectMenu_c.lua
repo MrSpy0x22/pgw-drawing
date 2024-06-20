@@ -298,22 +298,23 @@ SelectMenu.handleKeys = function(key, pressing)
         local isEnabled = SelectMenu.config.data[selected].enabled == true
 
         if isEnabled then
-            SelectMenu.destroy()
-    
             local eventName = SelectMenu.config.callbackEventName
+            
             if eventName then
                 triggerServerEvent(eventName, SelectMenu.config.callbackEventSendTo, SelectMenu.config.menuId, true,
                     SelectMenu.config.selected, SelectMenu.config.highlighted)
             end
+
+            SelectMenu.destroy()
         end
     elseif (key == "backspace" or key == "f") and pressing then
-        SelectMenu.destroy()
-
         local eventName = SelectMenu.config.callbackEventName
         if eventName then
             triggerServerEvent(eventName, SelectMenu.config.callbackEventSendTo, SelectMenu.config.menuId, false,
                 SelectMenu.config.selected, SelectMenu.config.highlighted)
         end
+
+        SelectMenu.destroy()
     end
 end
 

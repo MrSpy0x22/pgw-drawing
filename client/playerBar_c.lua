@@ -155,7 +155,7 @@ end
 PlayerBar.getData = function(forPlayer)
     local ver, stars, nick, id, scores, xscores, level, levelProgress, fract, frank, fscores, job, jscores
 
-    ver = getElementData(root, "global.version", false)
+    --ver = getElementData(root, "global.version", false)
     stars = 1 -- TODO:
     nick = getPlayerName(forPlayer)
     id = getElementData(forPlayer, "session.playerId", false)
@@ -178,7 +178,7 @@ PlayerBar.getData = function(forPlayer)
     end
 
     return {
-        ver = ver, stars = stars, nick = nick, id = id, scores = scores, xscores = xscores, level = level,
+        stars = stars, nick = nick, id = id, scores = scores, xscores = xscores, level = level,
         levelProgress = levelProgress, fract = fract, frank = frank, fscores = fscores, job = job, jscores = jscores
     }
 end

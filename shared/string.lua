@@ -26,3 +26,15 @@ String.toNumber = function(numberValue, thousandSeparator, stringToAdd, isPostfi
 
     return false
 end
+
+String.shorten = function(text, len)
+    if type(text) ~= "string" then return false end
+    if string.len(text) <= len then return text end
+    if type(len) ~= "number" or len < 2 then len = 2 end
+
+    local halfLength = math.floor(len / 2)
+    local firstPart = string.sub(text, 1, halfLength)
+    local secondPart = string.sub(text, -halfLength)
+
+    return firstPart .. "..." .. secondPart
+end

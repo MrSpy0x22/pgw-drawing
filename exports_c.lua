@@ -25,3 +25,7 @@ end
 function removeText3D(id)
     Text3D.remove(id)
 end
+
+function addDeathReason(killer, killed, reason)
+    DeathList.add(killer, killed, reason)
+end

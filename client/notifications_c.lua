@@ -15,10 +15,24 @@ local renderStartX = 0.22
 local renderStartY = 0.76
 local renderOffX = 0.03
 local renderOffY = 0.065
-
-local 
+local data = {}
 
 --#endregion
+
+--[[
+
+]]
+
+Notifications.push = function()
+
+end
+
+Notifications.pull = function()
+
+end
+
+Notifications.draw = function()
+end
 
 --[[-------------------------------------------------
 Notes:
