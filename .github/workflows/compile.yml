@@ -9,4 +9,4 @@ jobs:
         with:
           python-version: '3.10'
       - run: ls
-      - run: python "../compile.py"
+      - run: python "__tools/compile.py"
