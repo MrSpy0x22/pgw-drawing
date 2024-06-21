@@ -10,10 +10,14 @@ jobs:
   compile:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - name: Setup
+        uses: actions/checkout@v4
+        uses: actions/setup-python@v5
         with:
           python-version: '3.10'
-      - run: pip install elementpath
-      - run: pip install requests
-      - run: python "__build__/compile.py"
+      - name: PIP install
+        run: pip install elementpath requests
+      - name: Run compile script
+        run: python "__build__/compile.py"
+      - name: Check...
+        run: ls
