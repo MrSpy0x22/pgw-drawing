@@ -23,6 +23,7 @@
     <script src="/client/playerBar_c.lua" type="client" cache="false" />
     <script src="/client/text3d_c.lua" type="client" cache="false" />
     <script src="/client/deathList_c.lua" type="client" cache="false" />
+    <script src="/client/nameTags_c.lua" type="client" cache="false" />
     <script src="/exports_c.lua" type="client" cache="false" />
 
     <script src="/main_c.lua" type="client" cache="false" />
