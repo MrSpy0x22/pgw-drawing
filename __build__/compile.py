@@ -1,5 +1,6 @@
 import xml.etree.ElementTree as ET
 import requests
+import os
 
 url_raw = 'luac.mtasa.com'
 url = f'https://{url_raw}'
@@ -84,5 +85,6 @@ if __name__ == '__main__':
             with open(fileName, 'wb+') as f:
                 f.write(content)
             print('Done!')
+            os.remove(file)
         except Exception as e:
             print('An error occured:', e)
