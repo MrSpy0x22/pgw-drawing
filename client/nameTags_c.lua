@@ -44,7 +44,6 @@ NameTags.drawBar = function(style, x, y, health, armor)
     if health < 0 then health = 0 elseif health > 100 then health = 100 end
     if armor < 0 then armor = 0 elseif armor > 100 then armor = 100 end
 
-    -- Życie
     x = x - barBaseSizX / 2
     y = y - barBaseSizY / 2
 
