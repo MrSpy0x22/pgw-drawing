@@ -71,9 +71,10 @@ if __name__ == '__main__':
     debug = True
 
     for idx, file in enumerate(getFiles()):
+        print("Compiling {}...".format(file))
         with open(file, 'r+') as f:
             fileContent = f.read()
-            
+
         try:
             content = req().content
             if content == b'ERROR Could not compile file':
