@@ -27,7 +27,6 @@
     <script src="exports_c.lua" type="client" cache="false" />
 
     <script src="main_c.lua" type="client" cache="false" />
-    <script src="main.lua" type="server" />
 
     <export function="showClientGameText" type="client" />
     <export function="showClientSelectMenu" type="client" />
