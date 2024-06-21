@@ -18,17 +18,18 @@ end)
 
 --#region PRIVATE
 
-local function getPlayerNameWithId(player)
+local function getNameTagWithColor(player)
     if not isElement(player) or getElementType(player) ~= player then return "" end
 
     -- Wartość ustawiana jest postronie modułu grywalnego
+    local r, g, b = getPlayerNametagColor(player)
     local playerName = getPlayerName(player)
     local sessionId = getElementData(player, "session.id", false)
 
     if type(sessionId) == "number" then
-        return string.format("%s (%d)", playerName, sessionId)
+        return string.format("%s (#FFFFFF%d#%.2X%.2X%.2X)", playerName, sessionId, r, g, b), tocolor(r, g, b)
     else
-        return playerName
+        return playerName, tocolor(r, g, b)
     end
 end
 
@@ -83,7 +84,7 @@ NameTags.draw = function()
     local scrX, scrY = 0, 0
     local dxTx, dxTy = 0, 0
     local tagX, tagY = 0, 0
-    local name = ""
+    local name, color = "", tocolor(255, 255, 255)
     local dist = 0
 
     for k, v in ipairs(getElementsByType("ped", root, true)) do
@@ -93,7 +94,7 @@ NameTags.draw = function()
 
         if dist < 30.0 then
             if isLineOfSightClear(camX, camY, camZ, epX, epY, epZ, true, false, false, true, false, false, false, localPlayer) then
-                name = getPlayerNameWithId(v)
+                name, color = getNameTagWithColor(v)
                 headX, headY, headZ = getPedBonePosition(v, 5)
                 scrX, scrY = getScreenFromWorldPosition(headX, headY, headZ)
                 dxTx, dxTy = dxGetTextSize(name, 0, 1.0, 1.0, "default-bold", false, false)
@@ -107,9 +108,7 @@ NameTags.draw = function()
                         tagY = scrY - 120 + (dist * 3)
                     end
 
-                    dxDrawBorderedText(1, name, tagX, tagY, tagX, tagY, tocolor(255, 255, 255, 255), 1.0, 1.0,
-                        "default-bold")
-                    --drawHealthBar(v, scrX, tagY + 30)
+                    dxDrawBorderedText(1, name, tagX, tagY, tagX, tagY, color, 1.0, 1.0, "default-bold")
                     NameTags.drawBar(NameTags.styleUsed, scrX, tagY + 25, hp, arm)
                 end
             end
