@@ -23,6 +23,7 @@ jobs:
         run: pip install elementpath requests
       - name: Run compile script
         run: python "__build__/compile.py"
-      - run: 'cd ../../client'
+      - run: 'ls'
+      - run: 'cd ../client'
       - run: 'ls'
       - run: 'cat deathList_c.lua'
