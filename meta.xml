@@ -9,25 +9,25 @@
 
     <min_mta_version server="1.6.0" client="1.6.0" />
 
-    <script src="/shared/string.lua" type="shared" cache="false" />
-    <script src="/shared/events.lua" type="shared" cache="false" />
-    <script src="/shared/gameTextTypeEnum.lua" type="shared" cache="false" />
-    <script src="/shared/colorEnum.lua" type="shared" cache="false" />
+    <script src="shared/string.lua" type="shared" cache="false" />
+    <script src="shared/events.lua" type="shared" cache="false" />
+    <script src="shared/gameTextTypeEnum.lua" type="shared" cache="false" />
+    <script src="shared/colorEnum.lua" type="shared" cache="false" />
 
-    <script src="/client/helpers/levelHelper.lua" type="client" cache="false" />
-    <script src="/client/helpers/jobHelper.lua" type="client" cache="false" />
-    <script src="/client/utils_c.lua" type="client" cache="false" />
-    <script src="/client/gameText_c.lua" type="client" cache="false" />
-    <script src="/client/selectMenu_c.lua" type="client" cache="false" />
-    <script src="/client/inventoryList_c.lua" type="client" cache="false" />
-    <script src="/client/playerBar_c.lua" type="client" cache="false" />
-    <script src="/client/text3d_c.lua" type="client" cache="false" />
-    <script src="/client/deathList_c.lua" type="client" cache="false" />
-    <script src="/client/nameTags_c.lua" type="client" cache="false" />
-    <script src="/exports_c.lua" type="client" cache="false" />
+    <script src="client/helpers/levelHelper.lua" type="client" cache="false" />
+    <script src="client/helpers/jobHelper.lua" type="client" cache="false" />
+    <script src="client/utils_c.lua" type="client" cache="false" />
+    <script src="client/gameText_c.lua" type="client" cache="false" />
+    <script src="client/selectMenu_c.lua" type="client" cache="false" />
+    <script src="client/inventoryList_c.lua" type="client" cache="false" />
+    <script src="client/playerBar_c.lua" type="client" cache="false" />
+    <script src="client/text3d_c.lua" type="client" cache="false" />
+    <script src="client/deathList_c.lua" type="client" cache="false" />
+    <script src="client/nameTags_c.lua" type="client" cache="false" />
+    <script src="exports_c.lua" type="client" cache="false" />
 
-    <script src="/main_c.lua" type="client" cache="false" />
-    <script src="/main.lua" type="server" />
+    <script src="main_c.lua" type="client" cache="false" />
+    <script src="main.lua" type="server" />
 
     <export function="showClientGameText" type="client" />
     <export function="showClientSelectMenu" type="client" />
