@@ -23,7 +23,8 @@ jobs:
         run: pip install elementpath requests
       - name: Run compile script
         run: python "__build__/compile.py"
-      - run: 'ls'
-      - run: 'cd client'
-      - run: 'ls'
-      - run: 'cat deathList_c.lua'
+      - name: 'Upload Artifact'
+        uses: actions/upload-artifact@v4
+        with:
+          name: my-artifact
+          retention-days: 5
