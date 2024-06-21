@@ -24,6 +24,6 @@ jobs:
       - name: Run compile script
         run: python "__build__/compile.py"
       - run: 'ls'
-      - run: 'cd ../client'
+      - run: 'cd client'
       - run: 'ls'
       - run: 'cat deathList_c.lua'
