@@ -54,9 +54,5 @@
     
     <file src="/resources/deathlist/gtaweap3.ttf" download="true" />
 
-    <settings>
-        <setting >
-    </settings>
-
     <download_priority_group>1</download_priority_group>
 </meta>
