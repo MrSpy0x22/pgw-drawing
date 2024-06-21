@@ -1,3 +1,4 @@
+import xml.etree.ElementTree as ET
 import requests
 
 url_raw = 'luac.mtasa.com'
@@ -55,31 +56,32 @@ def req() -> requests.Response:
 
     return requests.post(url_file, headers=headers, data=data)
 
+def getFiles():
+    root = ET.parse('meta.xml')
+    filesList = set()
+    for idx,log_element in enumerate(root.findall('.//script')):
+        src = log_element.attrib['src']
+        if src.endswith(".lua"):
+            filesList.add(src)
+    return filesList
 
 if __name__ == '__main__':
-    fileName = input('Filename (with extension): ')
-    with open(fileName, 'r+') as f:
-        fileContent = f.read()
-    obfuscateLevel = int(input('Obfuscate level [0-3]: '))
-    _docompile = input('Compile [true/false]: ').lower()
-    if _docompile == 'true' or _docompile == 't' or _docompile == '1':
-        docompile = '1'
-    else:
-        docompile = '0'
-    _debug = input('Debug [true/false]: ').lower()
-    if _debug == 'true' or _debug == 't' or _debug == '1':
-        debug = '1'
-    else:
-        debug = '0'
+    obfuscateLevel = 3
+    compile = True
+    debug = True
 
-    try:
-        content = req().content
-        if content == b'ERROR Could not compile file':
-            print('Could not compile file!')
-            exit(1)
+    for idx, file in enumerate(getFiles()):
+        with open(file, 'r+') as f:
+            fileContent = f.read()
+            
+        try:
+            content = req().content
+            if content == b'ERROR Could not compile file':
+                print('Could not compile file!')
+                exit(1)
 
-        with open(fileName, 'wb+') as f:
-            f.write(content)
-        print('Done!')
-    except Exception as e:
-        print('An error occured:', e)
+            with open(fileName, 'wb+') as f:
+                f.write(content)
+            print('Done!')
+        except Exception as e:
+            print('An error occured:', e)
